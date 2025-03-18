@@ -1,0 +1,6 @@
+node_modules/
+build/
+.env
+tools.json
+*.log
+.DS_Store
