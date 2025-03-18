@@ -1,0 +1,34 @@
+{
+  "name": "ai-meta-mcp-server",
+  "version": "1.0.0",
+  "description": "A dynamic MCP server that allows AI to create and execute custom tools through a meta-function architecture",
+  "type": "module",
+  "main": "build/index.js",
+  "bin": {
+    "ai-meta-mcp-server": "./build/index.js"
+  },
+  "scripts": {
+    "build": "tsc && chmod 755 build/index.js",
+    "start": "node build/index.js",
+    "dev": "tsx src/index.ts"
+  },
+  "keywords": [
+    "mcp",
+    "modelcontextprotocol",
+    "ai",
+    "llm"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.7.0",
+    "vm2": "^3.9.19",
+    "zod": "^3.23.8",
+    "zod-to-json-schema": "^3.24.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.2",
+    "tsx": "^4.16.5",
+    "typescript": "^5.5.4"
+  }
+}
