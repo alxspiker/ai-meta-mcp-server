@@ -20,7 +20,7 @@ const TOOLS_DB_PATH = process.env.TOOLS_DB_PATH || "./tools.json";
 type StoredTool = {
   name: string;
   description: string;
-  inputSchema: z.ZodType<any, any, any> | Record<string, any>;
+  inputSchema: z.ZodObject<any> | z.ZodRawShape | Record<string, any> | string;
   implementation: string;
   executionEnvironment: "javascript" | "python" | "shell";
   createdAt: Date;
@@ -131,29 +131,29 @@ async function executeShell(code: string, params: Record<string, any>): Promise<
 // Register a tool with the MCP server
 function registerToolWithServer(toolDef: StoredTool) {
   try {
-    let schema: z.ZodType<any, any, any>;
+    let paramsSchema: z.ZodRawShape = {};
     
     // Handle both string schemas and ZodType objects
     if (typeof toolDef.inputSchema === "string") {
       try {
-        const schemaObj = JSON.parse(toolDef.inputSchema as string);
-        schema = z.object(schemaObj);
+        paramsSchema = JSON.parse(toolDef.inputSchema as string);
       } catch (e) {
         console.error(`Failed to parse schema for tool ${toolDef.name}:`, e);
-        schema = z.object({});
+        // Keep empty object as default
       }
-    } else if (toolDef.inputSchema instanceof z.ZodType) {
-      schema = toolDef.inputSchema as z.ZodType<any, any, any>;
-    } else {
+    } else if (toolDef.inputSchema instanceof z.ZodObject) {
+      // If it's a ZodObject, extract its shape which is a ZodRawShape
+      paramsSchema = toolDef.inputSchema.shape;
+    } else if (typeof toolDef.inputSchema === "object" && toolDef.inputSchema !== null) {
       // Assume it's a raw object schema
-      schema = z.object(toolDef.inputSchema as Record<string, any>);
+      paramsSchema = toolDef.inputSchema as Record<string, any>;
     }
 
     // Register the tool with the server
     server.tool(
       toolDef.name,
       toolDef.description,
-      schema,
+      paramsSchema,
       async (params) => {
         console.error(`Executing custom tool ${toolDef.name} with parameters:`, params);
         try {
