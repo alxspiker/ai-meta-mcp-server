@@ -48,9 +48,5 @@ ENV ALLOW_SHELL_EXECUTION=false
 ENV PERSIST_TOOLS=true
 ENV TOOLS_DB_PATH=/app/data/tools.json
 
-# Add health check (optional, for container orchestration)
-HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
-  CMD node -e "console.log('Server is healthy')" || exit 1
-
 # Set the entry point
 ENTRYPOINT ["node", "build/index.js"]

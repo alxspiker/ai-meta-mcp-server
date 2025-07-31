@@ -2,9 +2,6 @@
 node_modules/
 npm-debug.log*
 
-# Build output
-build/
-
 # Runtime data
 *.log
 *.pid
