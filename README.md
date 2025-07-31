@@ -34,6 +34,23 @@ npm install ai-meta-mcp-server
 npx ai-meta-mcp-server
 ```
 
+### Running with Docker
+
+```bash
+# Build the Docker image
+docker build -t ai-meta-mcp-server .
+
+# Run the container
+docker run --rm -i ai-meta-mcp-server
+
+# Run with custom configuration and persistent storage
+docker run --rm -i \
+  -e ALLOW_PYTHON_EXECUTION=true \
+  -e ALLOW_SHELL_EXECUTION=false \
+  -v $(pwd)/data:/app/data \
+  ai-meta-mcp-server
+```
+
 ### Configuration
 
 Environment variables:
