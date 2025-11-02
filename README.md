@@ -2,6 +2,10 @@
 
 A dynamic MCP server that allows AI models to create and execute their own custom tools through a meta-function architecture. This server provides a mechanism for AI to extend its own capabilities by defining custom functions at runtime.
 
+<a href="https://glama.ai/mcp/servers/@alxspiker/ai-meta-mcp-server">
+  <img width="380" height="200" src="https://glama.ai/mcp/servers/@alxspiker/ai-meta-mcp-server/badge" alt="AI Meta Server MCP server" />
+</a>
+
 ## Features
 
 - **Dynamic Tool Creation**: AI can define new tools with custom implementations
